@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+	// function Cat() {
+		
+	// }
+	// Cat.prototype = {
+	// 	food: 'fish',
+	// 	say: function (){
+	// 		alert('我喜欢吃'+this.food);
+	// 	}
+	// }
+	// var blackCat = new Cat();
+	// console.log(blackCat);
+	// blackCat.say();
+
+	// function Dog() {
+
+	// }
+	// Dog.prototype = {
+	// 	food: 'bone'
+	// }
+	// var dog = new Dog();	
+	// blackCat.say.call(dog);
+	// console.log(dog);
+	// function arg(a,b,c,d) {
+	// 	console.log(arguments);
+	// }
+	// arg(1,2,3,4);
+	// console.log(Math.max(1,2,3,4,5));
+	// console.log(Math.max.apply(null,[1,2,3,4,5]));
+	// var obj = new Object();
+	// obj.name = '222';
+	// console.log(obj.hasOwnProperty('name'));
+	// function setName(obj) {
+	//     obj.name = "Nicholas";
+	// }
+	// var person = new Object();
+	// setName(person);
+	// alert(person.name);
+	// function Person(name){
+	// 	this.name = name;
+	// }
+	// Person.prototype.say = function(){
+	// 	console.log(this.name);
+	// }
+	// var p = new Person('xiaoxiao');
+	// var s = p.say;
+	// s();
+	// console.log(p);
+	// +function() {     
+	// 	alert(a)      
+	// 	a();      
+	// 	var a = function() {        
+	// 		console.log(1);      
+	// 	}    
+	// 	function a() {      
+	// 		console.log(2);     
+	// 	}    
+	// 	alert(a)    
+	// 	a();       
+	// 	var c = d = a;   
+	// }();   
+	// alert(d);   
+	// alert(c);
+
+	// this.a = 20;
+	// var test = {    
+	// 	a: 40,    
+	// 	init:()=> {        
+	// 		console.log(this.a);        
+	// 		function go() {            
+	// 			// this.a = 60;            
+	// 			console.log(this.a);        
+	// 		}        
+	// 		go.prototype.a = 50;        
+	// 		return go;       
+	//  	}
+	// };
+	//  //var p = test.init();
+	//  //p();
+	//  var s = test.init();
+	//  console.log(s);
+	//  var b = new s;
+	 // test.init();
+	 // new(test.init())();
+	// var a={},
+	// b={key:'b'},
+	// c={key:'c'};
+	// a[b]=12;
+	// a[c]=78;
+	// console.log(a[c]);
+	// function a(n,m) {
+	// 	if (n == 1) {
+	// 		return;
+	// 	}
+	// 	return (a(n-1,m)+m)%n;
+	// }
+	// console.log(a(10,2));
+	// let p1 = new Promise(function(resolve,reject){
+	// 	console.log(111)
+	// 	resolve();
+	// }).
+	// then(function(){
+	// 	console.log(222)
+	// })
+	// console.log(p1)
+	function Stack() {
+		this.dataStore = [];
+		this.top = function () {
+			return this.dataStore[this.dataStore.length -1]; 
+		}
+		this.push = function(val) {
+			this.dataStore.push(val);
+		}
+		this.pop = function() {
+			return this.dataStore.pop();
+		}
+		this.len = function() {
+			return this.dataStore.length;
+		}
+		this.iskong = function () {
+			return this.dataStore.length === 0;
+		}
+		this.clear = function () {
+			this.dataStore = [];
+		}
+	}
+	function isHuiwen(str) {
+		var s = new Stack();
+		for (var i = 0; i < str.length; i++) {
+			s.push(str[i]);
+		}
+
+		var rstr = '';
+		while(s.len() > 0) {
+			rstr += s.pop();
+		}
+		if (str === rstr) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function Queue () {
+		this.dataStore = [];
+		this.push = function (val) {
+			this.dataStore.push(val);
+		}
+		this.shift = function () {
+			this.dataStore.shift();
+		}
+		this.top = function () {
+			return this.dataStore[0];
+		}
+		this.last = function () {
+			return this.dataStore[this.dataStore.length -1];
+		}
+		this.clear = function () {
+			this.dataStore = [];
+		}
+		this.toStr = function () {
+			return this.dataStore.join('\n');
+		}
+		this.isKong = function () {
+			return this.dataStore.length === 0;
+		}
+	}
+	function Myset() {
+		this.dataStore = [];
+		this.add = function (val) {
+			if(this.dataStore.indexOf(val) < 0) {
+				this.dataStore.push(val);
+				return true;
+			} else {
+				alert('元素已存在');
+				return false;
+			}
+		}
+		this.remove = function (data) {
+			if(this.dataStore.indexOf(data) > -1) {
+				this.dataStore.splice(data,1);
+				return true;
+			} else {
+				alert('元素不存在');
+				return false;
+			}
+		}
+		this.len = function () {
+			return this.dataStore.length;
+		}
+		this.show = function () {
+			return this.dataStore.join('\n');
+		}
+		this.contains = function (data) {
+			if(this.dataStore.indexOf(data) > -1) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		this.union = function (set) {
+			var temp = new Myset();
+			for(var i = 0;i < this.dataStore.length;i++) {
+				temp.add(this.dataStore[i]);
+			}
+			for (var j = 0; j < set.len();j++) {
+				if (!temp.contains(set.dataStore[j])) {
+					temp.add(set.dataStore[j]);
+				}		
+			}
+			return temp;
+        }
+        this.common = function (set) {
+            var temp = new Myset();
+            for (var i = 0; i < this.dataStore.length;i++) {
+                temp.add(this.dataStore[i]);
+            }
+            for (var j = 0; j < set.len();j++) {
+                if(!temp.contains(set.dataStore[j])) {
+                    temp.add(set.dataStore[j]);
+                }
+            }
+        }
+	}
+	var m = new Myset();
+	m.add('a');
+	m.add('b');
+	var mm = new Myset();
+	mm.add('a');
+	mm.add('c');
+	var newm = m.union(mm);
+	console.log(newm.show())
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

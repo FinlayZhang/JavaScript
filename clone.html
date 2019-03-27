@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function cloneShallow(obj) {
+            if (typeof obj !== 'object') return;
+            var target = obj instanceof Array ? [] : {};
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    target[key] = obj[key];
+                }
+            }
+            return target;
+        }
+
+        function deepCopy(obj) {
+            if (typeof obj !== 'object') return;
+            var target = obj instanceof Array ? [] : {};
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    target[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
+                }
+            }
+            return target;
+        }
+
+        var a = {
+            name: "muyiy",
+            book: {
+                title: "You Don't Know JS",
+                price: "45"
+            },
+            a1: undefined,
+            a3: 123
+        }
+        var b = cloneShallow(a);
+        var c = deepCopy(a);
+        a.book.price = '55';
+        console.log(b);
+        console.log(c);
+    </script>
+</body>
+
+</html>
