@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>instanceof</title>
+</head>
+
+<body>
+    <script>
+        function instanceof2(left, right) {
+            var proto = right.prototype;
+            left = left.__proto__;
+            while (true) {
+                if (!left) return false;
+                if (left === proto) return true;
+                left = left.__proto__;
+            }
+        }
+        var arr = [];
+
+        function Test() {}
+        var test = new Test();
+        console.log(instanceof2(arr, Array));
+        console.log(instanceof2(test, Test));
+        console.log(instanceof2(test, Array));
+    </script>
+</body>
+
+</html>

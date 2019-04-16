@@ -17,35 +17,30 @@
         }
 
         function debounce(fn, delay) {
-            return function (...rest) {
-                clearTimeout(fn.id);
-                fn.id = setTimeout(() => {
-                    fn.apply(this, rest);
+            var timer;
+            return function () {
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fn.apply(this, arguments);
                 }, delay);
             }
         }
 
         let inputb = document.getElementById('debounce')
 
-        let debounceAjax = debounce(ajax, 300)
+        let debounceAjax = debounce(ajax, 1000)
 
         inputb.addEventListener('keyup', function (e) {
             debounceAjax(e.target.value)
         })
 
         function throttle(fn, delay) {
-            let last;
-            return function (...rest) {
-                let now = +new Date();
-                if (last && now < last + delay) {
-                    clearTimeout(fn.id);
-                    fn.id = setTimeout(() => {
-                        last = now;
-                        fn.apply(this, rest);
-                    }, delay);
-                } else {
-                    last = now;
-                    fn.apply(this, rest);
+            var last = new Date();
+            return function () {
+                var now = new Date();
+                if (now - last > delay) {
+                    fn.apply(this, arguments);
+                    last = new Date();
                 }
             }
         }

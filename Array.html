@@ -18,12 +18,12 @@
         }
 
         // 实现foreach
-        Array.prototype.forEachs = function (callback, thisObj) {
+        Array.prototype.forEachs = function (callback, target) {
             if (typeof callback != 'function') return false;
             var len = this.length;
             for (var i = 0; i < len; i++) {
                 if (this.hasOwnProperty(i)) {
-                    callback.call(thisObj, this[i], i, this);
+                    callback.call(target, this[i], i, this);
                 }
             }
         }
@@ -32,13 +32,13 @@
         }, temp)
 
         // 实现map
-        Array.prototype.maps = function (callback, thisObj) {
+        Array.prototype.maps = function (callback, target) {
             if (typeof callback != 'function') return false;
             var len = this.length;
             var tempArr = [];
             for (var i = 0; i < len; i++) {
                 if (this.hasOwnProperty(i)) {
-                    tempArr.push(callback.call(thisObj, this[i], i, this));
+                    tempArr.push(callback.call(target, this[i], i, this));
                 }
             }
             return tempArr;
@@ -49,12 +49,12 @@
         // console.log(newArr);
 
         // 实现filter
-        Array.prototype.filter1 = function (callback, thisObj) {
+        Array.prototype.filter1 = function (callback, target) {
             if (typeof callback != 'function') return false;
             var len = this.length;
             var tempArr = [];
             for (var i = 0; i < len; i++) {
-                if (this.hasOwnProperty(i) && callback.call(thisObj, this[i], i, this)) {
+                if (this.hasOwnProperty(i) && callback.call(target, this[i], i, this)) {
                     tempArr.push(this[i]);
                 }
             }
@@ -66,11 +66,11 @@
         // console.log(newArr1);
 
         // 实现some
-        Array.prototype.some1 = function (callback, thisObj) {
+        Array.prototype.some1 = function (callback, target) {
             if (typeof callback != 'function') return false;
             var len = this.length;
             for (var i = 0; i < len; i++) {
-                if (this.hasOwnProperty(i) && callback.call(thisObj, this[i], i, this)) {
+                if (this.hasOwnProperty(i) && callback.call(target, this[i], i, this)) {
                     return true;
                 }
             }
@@ -82,11 +82,11 @@
         // console.log(someArr);
 
         // 实现every
-        Array.prototype.every1 = function (callback, thisObj) {
+        Array.prototype.every1 = function (callback, target) {
             if (typeof callback != 'function') return false;
             var len = this.length;
             for (var i = 0; i < len; i++) {
-                if (this.hasOwnProperty(i) && !callback.call(thisObj, this[i], i, this)) {
+                if (this.hasOwnProperty(i) && !callback.call(target, this[i], i, this)) {
                     return false;
                 }
             }
@@ -134,24 +134,30 @@
 
         // 字符串最长子串
         var lengthOfLongestSubstring = function (s) {
-            var res = 0; // 用于存放当前最长无重复子串的长度
-            var str = ""; // 用于存放无重复子串
-            var len = s.length;
-            for (var i = 0; i < len; i++) {
-                var char = s[i];
-                var index = str.indexOf(char);
-                if (index === -1) {
-                    str += char;
-                    res = res < str.length ? str.length : res;
+            let len = s.length;
+            if (len < 1) return len;
+            let longest = 1;
+            let curLen = 1;
+            let subStart = 0;
+            let charPos = {};
+            charPos[s.charAt(0)] = 0;
+            for (var i = 1; i < len; i++) {
+                let char = s.charAt(i);
+                let posCharPrev = charPos[char];
+                if (posCharPrev !== undefined && posCharPrev >= subStart) {
+                    subStart = posCharPrev + 1;
+                    curLen = i - subStart + 1;
                 } else {
-                    str = str.substr(index + 1) + char;
+                    curLen++;
+                    if (curLen > longest) longest = curLen;
                 }
+                charPos[char] = i;
             }
-            return str;
+            return charPos;
         };
 
         var s = "abcda";
-        // console.log(lengthOfLongestSubstring(s));
+        console.log(lengthOfLongestSubstring(s));
 
         // 快速排序
         function quickSort(arr) {

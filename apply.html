@@ -117,12 +117,14 @@
             console.log('I am ' + this.name);
         }
 
-        function objectFactory() {
-            var obj = {},
-                Constructor = [].shift.call(arguments);
-            obj.__proto__ = Constructor.prototype;
-            Constructor.apply(obj, arguments);
-            return obj;
+        function objectFactory(constructor) {
+            var res = {};
+            res.__proto__ = constructor.prototype;
+            var ret = constructor.apply(res, Array.prototype.slice.call(arguments, 1));
+            if (typeof constructor === 'object' || typeof constructor === 'function') {
+                return ret;
+            }
+            return res;
         };
         var person = objectFactory(Otaku, 'Kevin', '18');
         // console.log(person);
