@@ -1,6 +1,6 @@
 var value = 2;
 var foo = {
-	value: 1
+  value: 1
 };
 // call模拟实现
 Function.prototype.call2 = function (context) {
