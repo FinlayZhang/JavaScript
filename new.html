@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function myNew(fn, ...args) {
+      let obj = Object.create(fn.prototype)
+      let res = fn.call(obj, ...args)
+      if (typeof res === "object" || typeof res === "function") {
+        return res
+      }
+      return obj
+    }
+    function Test(name, age) {
+			this.name = name
+			this.age = age
+			this.habit = 'game'
+		}
+    Test.prototype.say = function() {
+      console.log(`name:${this.name},age:${this.age}`)
+    }
+    let object = myNew(Test, 'Kevin', '18')
+    let temp = new Test('Kevin', '18')
+    console.log(temp, object)
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    Array.prototype.myReduce = function(callback, target) {
+      if (typeof callback != 'function') throw new Error('Callback must be a function')
+      let arr = [...this] // 拷贝数组
+      target && arr.unshift(target) // 传入的初始值
+      let index = 0, value
+      while (arr.length > 1) {
+        index++
+        value = callback(arr[0], arr[1], index - 1, this)
+        arr.splice(0, 2, value)
+      }
+      return value
+    }
+    let test = [1, 2, 3, 4]
+    let res = test.myReduce((a, b, index, array) => {
+      console.log(a, b, index, array)
+      return a + b
+    }, 10)
+  </script>
+</body>
+</html>

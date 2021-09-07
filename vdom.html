@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let tree = {
+      tag: 'DIV',
+      attrs: {
+        id:'app',
+        class: 'parent'
+      },
+      children: [
+        {
+          tag: 'SPAN',
+          attrs: {
+            class: 'child'
+          },
+          children: [
+            { tag: 'A', children: [] }
+          ]
+        },
+        {
+          tag: 'SPAN',
+          attrs: {
+            class: 'child'
+          },
+          children: [
+            { tag: 'A', children: [] },
+            { tag: 'A', children: [] }
+          ]
+        }
+      ]
+    }
+    function objRenderDom(vdom) {
+      let name = vdom.tag
+      let props = vdom.attrs
+      let children = vdom.children
+      let dom = document.createElement(name)
+      for (let prop in props) {
+        dom.setAttribute(prop, props[prop])
+      }
+      children && children.forEach(child => {
+        dom.appendChild(objRenderDom(child))
+      })
+      return dom
+    }
+    let el = objRenderDom(tree)
+    console.log(el)
+  </script>
+</body>
+</html>

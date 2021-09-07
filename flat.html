@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    Array.prototype.myFlat = function() {
+      let res = []
+      for (let i = 0; i < this.length; i ++) {
+        if (Array.isArray(this[i])) {
+          res = res.concat(this[i].myFlat())
+        } else {
+          res.push(this[i])
+        }
+      }
+      return res
+    }
+    let test = [1, 2, [3, 4, 6, [7, 8, [9]]], 10]
+    console.log(test.myFlat())
+  </script>
+</body>
+</html>

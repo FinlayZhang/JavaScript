@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var test = { a: 1 }, a = 2
+    var fun = function(x, y, z) {
+      console.log( `a:${this.a}、x:${x}、y:${y}、z:${z}`)
+      return {x, y, z}
+    }
+    /**
+      * @param {context} object
+      */
+    Function.prototype.myBind = function(context) {
+      context = context || window
+      let _this = this
+      let innerArgs = Array.prototype.slice.call(arguments, 1)
+      let fBind = function() {
+        return _this.apply(this instanceof _this ? this : context, [...innerArgs, ...arguments])
+      }
+      fBind.prototype = Object.create(this.prototype)
+      return fBind
+    }
+    let Result = fun.myBind(test, 1)
+    Result(1, 2, 3)
+  </script>
+</body>
+</html>

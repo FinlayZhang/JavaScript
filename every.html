@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    Array.prototype.myEvery = function(callback, target) {
+      if (typeof callback != 'function') throw new Error('Callback must be a function')
+      for (let i = 0; len = this.length, i < len; i ++) {
+        if (this.hasOwnProperty(i) && !callback.call(target, this[i], i, this)) {
+          return false
+        }
+      }
+      return true
+    }
+    let test = [1, 2, 3, 4]
+    let res = test.myEvery((item, index, array) => {
+      return item > 0
+    }, { a : 1 })
+    console.log(res)
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    Array.prototype.quickSort = function() {
+      if (this.length <= 1) return this // 递归出口
+      let left = [], right = [], current = this.shift()
+      for (let i = 0; i < this.length; i++) {
+        if (this[i] < current) {
+          left.push(this[i]) //放在左边
+        } else {
+          right.push(this[i]) //放在右边
+        }
+      }
+      return left.quickSort().concat(current, right.quickSort())
+    }
+    let test = [9, 5, 6, 7, 7, 1, 10, 4, 5, 3, 2, 1, 9]
+    console.log(test.quickSort())
+  </script>
+</body>
+</html>
